@@ -7,16 +7,6 @@ local plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- format & linting
-      -- FIXME: null-ls is deprecated
-      -- {
-      --   "jose-elias-alvarez/null-ls.nvim",
-      --   config = function()
-      --     require "custom.configs.null-ls"
-      --   end,
-      -- },
-    },
     config = function()
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
@@ -73,16 +63,6 @@ local plugins = {
 
   { "habamax/vim-godot", ft = "gdscript" },
   { "lervag/vimtex", ft = "tex" },
-
-  {
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
 
   {
     "NvChad/nvim-colorizer.lua",
@@ -288,7 +268,7 @@ local plugins = {
 
       clangtidy.args = {
         '--quiet',
-        '-checks=performance-*,bugprone-*,mis-*'
+        '-checks=performance-*,bugprone-*'
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -296,11 +276,33 @@ local plugins = {
           require("lint").try_lint()
         end,
       })
-
     end
-
   },
 
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_browser = "/bin/brave-browser"
+    end,
+    ft = { "markdown" },
+  },
+
+  {
+    "mhartington/formatter.nvim",
+    -- cmd = {"Format", "FormatWrite", "FormatLock", "FormatWriteLock"},
+    config = function()
+      require "custom.configs.formatter"
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          vim.cmd("FormatWrite")
+        end,
+      })
+    end,
+    ft = { "c", "cpp", "python" },
+  }
 
 
   -- To make a plugin not be loaded
