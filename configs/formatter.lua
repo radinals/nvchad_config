@@ -17,6 +17,7 @@ require("formatter").setup {
             "-assume-filename",
             util.escape_path(util.get_current_buffer_file_name()),
             "--style=InheritParentConfig",
+            "-fallback-style=none"
           },
           stdin = true,
           try_node_modules = true,
@@ -31,6 +32,7 @@ require("formatter").setup {
             "-assume-filename",
             util.escape_path(util.get_current_buffer_file_name()),
             "--style=InheritParentConfig",
+            "-fallback-style=none"
           },
           stdin = true,
           try_node_modules = true,
