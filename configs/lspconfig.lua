@@ -7,6 +7,10 @@ capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
+
+-- show the border on :LspInfo floating window
+require("lspconfig.ui.windows").default_options.border = "single"
+
 -- if you just want default config for the servers then put them in a table
 local servers = { "html", "cssls", "tsserver", "clangd", "pyright" }
 
