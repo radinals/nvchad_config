@@ -1,6 +1,10 @@
 local M = {}
 
 M.treesitter = {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = { 'org' },
+  },
   ensure_installed = {
     "vim",
     "lua",
@@ -13,6 +17,7 @@ M.treesitter = {
     "cpp",
     "markdown",
     "markdown_inline",
+    "org",
   },
   indent = {
     enable = true,

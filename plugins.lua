@@ -76,6 +76,7 @@ local plugins = {
 
   {
     "TimUntersberger/neogit",
+    enable = false,
     init = function()
       require("core.utils").load_mappings "neogit"
     end,
@@ -95,9 +96,9 @@ local plugins = {
       require("core.utils").load_mappings "SymbolsOutline"
     end,
     dependencies = "nvim-lspconfig",
-    config = function(_)
-      require "plugins.configs.symbols_outline"
-    end,
+    -- config = function(_)
+    --   require "plugins.configs.symbols_outline"
+    -- end,
     cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
   },
 
@@ -126,6 +127,7 @@ local plugins = {
 
   {
     "vimwiki/vimwiki",
+    enabled = false,
     event = "InsertEnter",
     ft = "wiki",
   },
@@ -150,7 +152,15 @@ local plugins = {
 
   {
     "hinell/lsp-timeout.nvim",
+    event = "VeryLazy",
     dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+      vim.g.lspTimeoutConfig = {
+        stopTimeout  = 1000 * 60 * 5, -- ms, timeout before stopping all LSPs
+        startTimeout = 1000 * 10,     -- ms, timeout before restart
+        silent       = false          -- true to suppress notifications
+      }
+    end,
   },
 
   {
@@ -164,12 +174,13 @@ local plugins = {
 
   {
    "sotte/presenting.vim",
-    event = "VeryLazy",
+    ft = "md",
     cmd = "StartPresenting",
   },
 
   {
     "tpope/vim-fugitive",
+    enabled = false,
     event = "VeryLazy",
   },
 
@@ -177,7 +188,7 @@ local plugins = {
     'kevinhwang91/nvim-ufo',
     dependencies = 'kevinhwang91/promise-async',
     event = "VeryLazy",
-    ft = {"c", "cpp", "python", "sh"},
+    ft = {"c", "cpp", "python", "sh", "md"},
     config = function()
       vim.o.foldcolumn = '0' -- '0' is not bad
       vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
@@ -292,7 +303,7 @@ local plugins = {
 
   {
     "mhartington/formatter.nvim",
-    -- cmd = {"Format", "FormatWrite", "FormatLock", "FormatWriteLock"},
+    cmd = {"Format", "FormatWrite", "FormatLock", "FormatWriteLock"},
     config = function()
       require "custom.configs.formatter"
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -302,7 +313,33 @@ local plugins = {
       })
     end,
     ft = { "c", "cpp", "python" },
-  }
+  },
+
+  {
+    'nvim-orgmode/orgmode',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    event = 'VeryLazy',
+    ft = "org",
+    config = function()
+      -- Load treesitter grammar for org
+      require('orgmode').setup_ts_grammar()
+      -- Setup orgmode
+      require('orgmode').setup({
+        org_agenda_files = '~/Documents/orgfiles/**/*',
+        org_default_notes_file = '~/Documents/orgfiles/refile.org',
+      })
+    end,
+  },
+
+  {
+    "m4xshen/hardtime.nvim",
+    enabled = false,
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {}
+  },
 
 
   -- To make a plugin not be loaded

@@ -7,11 +7,26 @@ local M = {}
 ---@type Base46HLGroupsList
 M.override = {
   Visual = {
-    bg = "lightbg",
+    bg = "light_grey",
+    fg = "white",
   },
+
   Comment = {
     fg = "light_grey",
     italic = true,
+  },
+
+  LineNr = {
+    fg = "blue",
+  },
+
+  CursorLineNr = {
+    fg = "white",
+  },
+
+
+  WinSeparator = {
+    fg = "white",
   },
 }
 
