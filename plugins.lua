@@ -62,7 +62,13 @@ local plugins = {
   },
 
   { "habamax/vim-godot", ft = "gdscript" },
-  { "lervag/vimtex", ft = "tex" },
+  { "lervag/vimtex",
+
+    config = function()
+      require "custom.configs.vimtex"
+    end,
+    ft = "tex"
+  },
 
   {
     "NvChad/nvim-colorizer.lua",
@@ -91,15 +97,17 @@ local plugins = {
   },
 
   {
-    "simrat39/symbols-outline.nvim",
+    'stevearc/aerial.nvim',
     init = function()
-      require("core.utils").load_mappings "SymbolsOutline"
+      require("aerial").setup()
+      require("core.utils").load_mappings "Aerial"
     end,
-    dependencies = "nvim-lspconfig",
-    -- config = function(_)
-    --   require "plugins.configs.symbols_outline"
-    -- end,
-    cmd = { "SymbolsOutline", "SymbolsOutlineOpen", "SymbolsOutlineClose" },
+    opts = {},
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
   },
 
   {
@@ -165,11 +173,11 @@ local plugins = {
 
   {
     "andweeb/presence.nvim",
-    enabled = false,
+    enabled = true,
     event = "VeryLazy",
-    config = function()
-      require "plugins.configs.nvim_presence"
-    end,
+    -- config = function()
+    --   require "plugins.configs.nvim_presence"
+    -- end,
   },
 
   {

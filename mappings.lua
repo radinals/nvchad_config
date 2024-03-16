@@ -14,10 +14,10 @@ M.general = {
   },
 }
 
-M.SymbolsOutline = {
+M.Aerial = {
   plugin = true,
   n = {
-    ["<space>symot"] = { "<cmd> SymbolsOutline <CR>", "Toggle LSP Symbols Outline", silent = true },
+    ["<space>st"] = { "<cmd> AerialToggle <CR>", "Toggle Symbols Outline", silent = true },
   },
 }
 
@@ -26,18 +26,18 @@ M.SymbolsUsage = {
   plugin = true,
   n = {
 
-    ["<space>symut"] = {
+    ["<space>sh"] = {
       function()
         require("symbol-usage").toggle()
       end,
-      "Toggle LSP Symbols Usage",
+      "Toggle LSP Symbols Usage Count",
     },
 
-    ["<space>symur"] = {
+    ["<space>sr"] = {
       function()
         require("symbol-usage").refresh()
       end,
-      "Refresh LSP Symbols Usage",
+      "Refresh LSP Symbols Usage Count",
     },
 
   },
