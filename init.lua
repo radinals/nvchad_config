@@ -12,3 +12,4 @@ local opt = vim.opt
 opt.swapfile = false
 opt.relativenumber = true
 opt.scrolloff = 999
+opt.wrap = false

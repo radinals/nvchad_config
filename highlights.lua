@@ -6,33 +6,33 @@ local M = {}
 
 ---@type Base46HLGroupsList
 M.override = {
-  Visual = {
-    bg = "light_grey",
-    fg = "white",
-  },
-
-  Comment = {
-    fg = "light_grey",
-    italic = true,
-  },
-
-  LineNr = {
-    fg = "blue",
-  },
-
-  CursorLineNr = {
-    fg = "white",
-  },
-
-
-  WinSeparator = {
-    fg = "white",
-  },
+  -- Visual = {
+  --   bg = "light_grey",
+  --   fg = "white",
+  -- },
+  --
+  -- Comment = {
+  --   fg = "light_grey",
+  --   italic = true,
+  -- },
+  --
+  -- LineNr = {
+  --   fg = "blue",
+  -- },
+  --
+  -- CursorLineNr = {
+  --   fg = "white",
+  -- },
+  --
+  --
+  -- WinSeparator = {
+  --   fg = "white",
+  -- },
 }
 
 ---@type HLTable
 M.add = {
-  NvimTreeOpenedFolderName = { fg = "green", bold = true },
+  -- NvimTreeOpenedFolderName = { fg = "green", bold = true },
 }
 
 return M

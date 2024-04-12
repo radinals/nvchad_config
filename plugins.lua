@@ -102,6 +102,7 @@ local plugins = {
       require("aerial").setup()
       require("core.utils").load_mappings "Aerial"
     end,
+    ft = {"c", "cpp", "python" },
     opts = {},
     -- Optional dependencies
     dependencies = {
