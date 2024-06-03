@@ -62,8 +62,8 @@ local plugins = {
   },
 
   { "habamax/vim-godot", ft = "gdscript" },
-  { "lervag/vimtex",
 
+  { "lervag/vimtex",
     config = function()
       require "custom.configs.vimtex"
     end,
@@ -80,21 +80,21 @@ local plugins = {
     },
   },
 
-  {
-    "TimUntersberger/neogit",
-    enable = false,
-    init = function()
-      require("core.utils").load_mappings "neogit"
-    end,
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "nvim-telescope/telescope.nvim", -- optional
-      "sindrets/diffview.nvim", -- optional
-      "ibhagwan/fzf-lua", -- optional
-    },
-    config = true,
-    cmd = "Neogit",
-  },
+  -- {
+  --   "TimUntersberger/neogit",
+  --   enable = false,
+  --   init = function()
+  --     require("core.utils").load_mappings "neogit"
+  --   end,
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim", -- required
+  --     "nvim-telescope/telescope.nvim", -- optional
+  --     "sindrets/diffview.nvim", -- optional
+  --     "ibhagwan/fzf-lua", -- optional
+  --   },
+  --   config = true,
+  --   cmd = "Neogit",
+  -- },
 
   {
     'stevearc/aerial.nvim',
@@ -164,17 +164,13 @@ local plugins = {
     event = "VeryLazy",
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
-      vim.g.lspTimeoutConfig = {
-        stopTimeout  = 1000 * 60 * 5, -- ms, timeout before stopping all LSPs
-        startTimeout = 1000 * 10,     -- ms, timeout before restart
-        silent       = false          -- true to suppress notifications
-      }
+      require "custom.configs.lsp_timeout"
     end,
   },
 
   {
     "andweeb/presence.nvim",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     -- config = function()
     --   require "plugins.configs.nvim_presence"
@@ -199,20 +195,7 @@ local plugins = {
     event = "VeryLazy",
     ft = {"c", "cpp", "python", "sh", "md"},
     config = function()
-      vim.o.foldcolumn = '0' -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-
-      require('ufo').setup({
-        preview = {
-          win_config = {
-            border = {'', '─', '', '', '', '─', '', ''},
-            winhighlight = 'Normal:Folded',
-            winblend = 0
-          },
-        },
-      })
+      require "custom.configs.nvim_ufo"
     end,
   },
 
@@ -255,21 +238,12 @@ local plugins = {
   {
     "rcarriga/nvim-dap-ui",
     ft = {"c", "cpp"},
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "folke/neodev.nvim"},
     init = function()
       require("dapui").setup()
     end,
     config = function()
-      local dap, dapui = require("dap"), require("dapui")
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
-      end
+      require "custom.configs.nvim_dap"
       require("core.utils").load_mappings "DapUI"
     end,
   },
@@ -278,24 +252,7 @@ local plugins = {
     "mfussenegger/nvim-lint",
     ft = {"c", "cpp"},
     config = function ()
-
-      require("lint").linters_by_ft = {
-        cpp = {"clangtidy"},
-        c = {"clangtidy"},
-      }
-
-      local clangtidy = require("lint" ).linters.clangtidy
-
-      clangtidy.args = {
-        '--quiet',
-        '-checks=performance-*,bugprone-*'
-      }
-
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-        callback = function()
-          require("lint").try_lint()
-        end,
-      })
+      require "custom.configs.nvim_lint"
     end
   },
 
@@ -333,7 +290,7 @@ local plugins = {
     ft = "org",
     config = function()
       -- Load treesitter grammar for org
-      require('orgmode').setup_ts_grammar()
+      -- require('orgmode').setup_ts_grammar()
       -- Setup orgmode
       require('orgmode').setup({
         org_agenda_files = '~/Documents/orgfiles/**/*',
@@ -343,13 +300,25 @@ local plugins = {
   },
 
   {
-    "m4xshen/hardtime.nvim",
-    enabled = false,
-    event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {}
+    'cdelledonne/vim-cmake',
+    ft = {"c", "cpp"},
+    config = function()
+      vim.g.cmake_command='cmake'
+      vim.g.cmake_test_command='ctest'
+      vim.g.cmake_default_config='Debug'
+      vim.g.cmake_build_dir_location='./build'
+    end,
   },
 
+  {
+    'jakemason/ouroboros',
+    init = function()
+      require("core.utils").load_mappings "ouroboros"
+    end,
+    ft = {"c", "cpp"},
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = {"Ouroboros"},
+  },
 
   -- To make a plugin not be loaded
   -- {

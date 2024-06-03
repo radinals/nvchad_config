@@ -47,12 +47,12 @@ M.DapAdapter = {
   plugin = true,
   n = {
     ["<leader>db"] = { "<cmd>DapToggleBreakpoint<CR>", "Toggle Dap Breakpoint", silent=true },
-    ["<leader>dc"] = { ":DapContinue<CR>", "Run Dap", silent=true },
-    ["<leader>dr"] = { "cmd>DapRestartFrame<CR>", "Restart Frame", silent=true },
+    ["<leader>dc"] = { "<cmd>DapContinue<CR>", "Run Dap", silent=true },
+    ["<leader>dr"] = { "<cmd>DapRestartFrame<CR>", "Restart Frame", silent=true },
     ["<leader>dq"] = { "<cmd>DapTerminate<CR>", "Quit Dap", silent=true },
-    ["<leader>dn"] = { "<cmd>DapStepInto<CR>", "Step Into", silent=true },
-    ["<leader>do"] = { "<cmd>DapStepOver<CR>", "Step Over", silent=true },
-    ["<leader>de"] = { "<cmd>DapStepOut<CR>", "Step Out", silent=true },
+    ["<leader>dn"] = { "<cmd>DapStepOver<CR>", "Step Over", silent=true },
+    ["<leader>di"] = { "<cmd>DapStepInto<CR>", "Step Into", silent=true },
+    ["<leader>do"] = { "<cmd>DapStepOut<CR>", "Step Out", silent=true },
   },
 }
 
@@ -77,6 +77,13 @@ M.DapUI = {
     },
 
    }
+}
+
+M.ouroboros = {
+  plugin = true,
+  n = {
+    ["<F4>"] = {"<cmd>Ouroboros<CR>", "Switch in Between Source and Header File", silent=true }
+  }
 }
 
 M.nvim_move = {
